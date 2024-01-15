@@ -18,6 +18,7 @@ void addonebyref(int *n){
     (*n)++;
 }
 
+// Pointers to structures
 void move(point *p){
     // Shorthand for (*p).x++
     p->x++;
