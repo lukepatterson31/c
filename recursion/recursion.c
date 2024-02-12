@@ -6,10 +6,10 @@ int factorial(int x);
 int main(int argc, char const *argv[])
 {
     if(argc > 1)
-    {
+    {        
         char *output;
         // parse argument char to int (char to parse, outvar for next item in array after parsed int, number base)
-        int num = strtoi(argv[1], &output, 10);
+        int num = strtol(argv[1], &output, 10);
         printf("%i! = %i\n", num, factorial(num));
         exit(EXIT_SUCCESS);
     }
