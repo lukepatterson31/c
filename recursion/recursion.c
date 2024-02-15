@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int factorial(int x);
+long factorial(long x);
 
 int main(int argc, char const *argv[])
 {
@@ -9,8 +9,8 @@ int main(int argc, char const *argv[])
     {        
         char *output;
         // parse argument char to int (char to parse, outvar for next item in array after parsed int, number base)
-        int num = strtol(argv[1], &output, 10);
-        printf("%i! = %i\n", num, factorial(num));
+        long num = strtol(argv[1], &output, 10);
+        printf("%li! = %li\n", num, factorial(num));
         exit(EXIT_SUCCESS);
     }
 
@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 }
 
 
-int factorial(int x)
+long factorial(long x)
 {
     if(x > 1)
     {
