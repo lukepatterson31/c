@@ -84,7 +84,7 @@ int remove_by_index(Node_t ** head, int n){
     retval = temp_node->value;
     current->next = temp_node->next;
     free(temp_node);
-    
+
     return retval;
 }
 
@@ -128,7 +128,6 @@ int main(){
     head->next->next = NULL;
     push(head, 0);
     
-    free(head->next->next);
     free(head->next);
     free(head);
 }
