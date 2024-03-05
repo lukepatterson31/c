@@ -1,11 +1,13 @@
 #include <stdio.h>
 
+// Union to hold and integer and it's bytes
 union intParts {
     int theInt;
     char bytes[sizeof(int)];
 };
 
-// tagged union
+// Struct to hold a number and it's type
+// tagged union, the tag (type) indicates which numeric type is stored
 struct operator {
     int type;
     union {
@@ -15,6 +17,7 @@ struct operator {
     };
 };
 
+// Union to hold the counts of different coins
 // coins[0] == quarter, etc.
 union Coins {
     struct {
@@ -39,7 +42,7 @@ int main(){
     printf("The int is %i\nThe bytes are [%i, %i, %i, %i]\n",
     theInt, *((char*)&theInt+0), *((char*)&theInt+1), *((char*)&theInt+2), *((char*)&theInt+3));
 
-    // or with array syntax which can be a tiny bit nicer sometimes
+    // or with array syntax
 
     printf("The int is %i\nThe bytes are [%i, %i, %i, %i]\n",
     theInt, ((char*)&theInt)[0], ((char*)&theInt)[1], ((char*)&theInt)[2], ((char*)&theInt)[3]);
@@ -47,7 +50,10 @@ int main(){
     union Coins change;
     for(int i = 0; i < sizeof(change) / sizeof(int); ++i)
     {
-        scanf("%i", change.coins + i); // BAD code! input is always suspect!
+        if(scanf("%i", change.coins + i) != 1){
+            printf("Invalid input!\n");
+            return 1;
+        }
     }
     printf("There are %i quarters, %i dimes, %i nickels, and %i pennies\n",
     change.quarter, change.dime, change.nickel, change.penny);
