@@ -8,8 +8,8 @@
 #include <netdb.h> 
 
 #define PORT 8080
+#define BUFFER_SIZE 1024
 
-// TODO increase buffer size and extract to a constant
 
 void error(const char *msg)
 {
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     struct sockaddr_in serv_addr;
     struct hostent *server;
 
-    char buffer[256];
+    char buffer[BUFFER_SIZE];
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) 
@@ -47,8 +47,8 @@ int main(int argc, char *argv[])
 
     while (1) { // Add a loop to keep the connection open
         printf("> ");
-        bzero(buffer,256);
-        fgets(buffer,255,stdin);
+        bzero(buffer,BUFFER_SIZE);
+        fgets(buffer,BUFFER_SIZE - 1,stdin);
 
         // If the user enters "exit", break the loop
         if (strncmp(buffer, "exit", 4) == 0) {
@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
         }
 
         // If the buffer is empty or contains just a newline, continue to the next iteration
+        // TODO read from the buffer and check if it's empty or contains just a newline
         if (buffer[0] == '\0' || (buffer[0] == '\n' && buffer[1] == '\0')) {
             continue;
         }
@@ -67,8 +68,8 @@ int main(int argc, char *argv[])
         if (n < 0) 
             error("ERROR writing to socket");
 
-        bzero(buffer,256);
-        n = read(sockfd,buffer,255);
+        bzero(buffer,BUFFER_SIZE);
+        n = read(sockfd,buffer,BUFFER_SIZE - 1);
         if (n < 0) 
             error("ERROR reading from socket");
 

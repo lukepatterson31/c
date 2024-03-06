@@ -7,9 +7,9 @@
 #include <netinet/in.h>
 
 #define PORT 8080
+#define BUFFER_SIZE 1024
 #define MAX_CLIENTS 5
 
-// TODO increase buffer size and extract to a constant
 
 void error(const char *msg)
 {
@@ -20,7 +20,7 @@ void error(const char *msg)
 int main(int argc, char *argv[])
 {
     int sockfd, newsockfd, clilen;
-    char buffer[256];
+    char buffer[BUFFER_SIZE];
     struct sockaddr_in serv_addr, cli_addr;
     int n;
 
@@ -47,8 +47,8 @@ while (running) { // Change this to check the running flag
         error("ERROR on accept");
 
     while (1) {
-        bzero(buffer, 256);
-        n = read(newsockfd, buffer, 255);
+        bzero(buffer, BUFFER_SIZE);
+        n = read(newsockfd, buffer, BUFFER_SIZE - 1);
         if (n < 0) error("ERROR reading from socket");
         buffer[n] = 0; // Null-terminate the string
 
